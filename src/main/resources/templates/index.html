@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+<h1 class="mb-4">Task Manager</h1>
+
+<form class="mb-4" action="/addTask" method="post">
+    <div class="form-group">
+        <label for="description">New Task:</label>
+        <input type="text" class="form-control" id="description" name="description" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Task</button>
+</form>
+
+<ul class="list-group">
+    <li th:each="task : ${tasks}" class="list-group-item">
+        <span th:text="${task.description}"></span>
+        <form action="/markAsCompleted" method="post" class="d-inline">
+            <input type="hidden" name="taskId" th:value="${task.id}">
+            <button type="submit" class="btn btn-success btn-sm" th:if="${!task.completed}">Mark as Completed</button>
+        </form>
+        <form action="/deleteTask" method="post" class="d-inline">
+            <input type="hidden" name="taskId" th:value="${task.id}">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+        <form action="/updateTaskDescription" method="post" class="d-inline">
+            <input type="hidden" name="taskId" th:value="${task.id}">
+            <div class="form-group">
+                <label for="newDescription">New Description:</label>
+                <input type="text" class="form-control" id="newDescription" name="newDescription" required>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Update Description</button>
+        </form>
+    </li>
+</ul>
+
+<a href="/completedTasks" class="btn btn-info mt-4 mr-2">View Completed Tasks</a>
+<a href="/incompleteTasks" class="btn btn-warning mt-4">View Incomplete Tasks</a>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
