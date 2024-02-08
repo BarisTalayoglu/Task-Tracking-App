@@ -1,1 +1,1 @@
-web: java -jar target/App1Application.jar
+web: java -jar src/main/java/com/taskmanager/app1/App1Application.java
